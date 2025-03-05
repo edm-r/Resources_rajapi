@@ -13,10 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv()
@@ -32,9 +29,11 @@ SECRET_KEY = 'django-insecure-7l-mr!k427s+^@fprwt8)9&tb=!)yln*_w@w41e(z_pmo#aj)=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['resources-rajapi.onrender.com']
 
-
+CSRF_TRUSTED_ORIGINS = [
+    "https://resources-rajapi.onrender.com",
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -51,7 +50,6 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -83,8 +81,13 @@ WSGI_APPLICATION = 'RAJAPI_COP.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('name'),
+        'USER': os.getenv('user'),
+        'PASSWORD': os.getenv('password'),
+        'HOST': os.getenv('host'),
+        'PORT': os.getenv('port'),
+        'OPTIONS': {'sslmode': 'require'},
     }
 }
 

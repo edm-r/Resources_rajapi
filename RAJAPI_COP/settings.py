@@ -31,9 +31,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['resources-rajapi.onrender.com']
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://resources-rajapi.onrender.com",
-]
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_HEADERS = {
+    'Authorization',
+    'Content-Type',
+}
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,13 +47,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
+    'rest_framework',
     'resources'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
